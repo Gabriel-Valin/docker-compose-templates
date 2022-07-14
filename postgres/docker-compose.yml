@@ -1,0 +1,30 @@
+version: "3"
+
+volumes:
+  pgdata:
+
+services:
+  postgres: 
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports: 
+      - 5432:5432
+    env_file: postgres.env
+    volumes:
+      - pgdata:/data/postgres
+    networks:
+      - postgres-adminer-network
+      
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    networks:
+      - postgres-adminer-network
+
+networks:
+  postgres-adminer-network:
+    driver: bridge
