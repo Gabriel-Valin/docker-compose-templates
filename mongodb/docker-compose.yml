@@ -1,0 +1,15 @@
+version: '3'
+
+volumes:
+  mongodb_dbdata:
+
+services:
+  mongodb:
+    container_name: mongodb_database
+    image: mongo
+    env_file: mongodb.env
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_dbdata:/data/db

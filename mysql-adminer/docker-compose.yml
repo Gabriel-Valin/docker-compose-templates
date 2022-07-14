@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  mysql_dbdata:
+
+services:
+  mysql_database:
+    container_name: mysql
+    image: mysql:5.7
+    env_file: .env
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_dbdata:/var/lib/mysql
+    networks:
+      - mysql-adminer-network
+  
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    networks:
+      - mysql-adminer-network
+
+networks:
+  mysql-adminer-network:
+    driver: bridge
+
